@@ -1,0 +1,82 @@
+using UnityEngine;
+
+public class enemy : MonoBehaviour
+{
+    #region variables
+    public GameObject Enemy;
+    Rigidbody rb;
+    bool move;
+    int x;
+    float timer;
+    public const float delay = 2;
+    public float speed = 2.0f;
+    int moveint = 0;
+
+    Vector2 randomX;
+    System.Random RNG = new System.Random();
+    #endregion variables
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
+    private void Update()
+    {
+        timer += Time.deltaTime;
+        if (timer > delay)
+        {
+            MoveAround();
+            //the timer is not reset intentionally
+            //this is because we need to wait for the enemies to generate
+        }
+    }
+    private bool IsMoveTrue(bool move)
+    {
+        moveint = RNG.Next(0, 2);
+        if (moveint == 0)
+        {
+            // move = false;
+            return false;
+        }
+        else
+        {
+           // move = true;
+            return true;
+        }
+    }
+
+
+
+    #region enemy Death
+    private void OnTriggerEnter(Collider other)
+    {
+        Destroy(Enemy);
+    }
+    #endregion enemyb Death
+    #region enemy movement
+    public void RandomGenerator()
+    {
+        x = RNG.Next(-4, 3);
+        randomX = new Vector2(x, 0);
+        #region verification
+        if (x == null || randomX == null)
+        {
+            Debug.LogError("x or randomX is null, What???");
+        }
+        #endregion verification
+    }
+
+    public void MoveAround()
+    {
+        if (move == true)
+        {
+            RandomGenerator();
+            rb.velocity = randomX;
+            timer += Time.deltaTime;
+            if (timer > delay)
+            {
+                rb.velocity = -randomX;
+            }
+        }
+    }
+    #endregion enemy movement
+}
