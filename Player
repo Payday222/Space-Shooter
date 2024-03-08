@@ -1,0 +1,42 @@
+using UnityEngine;
+
+public class Player : MonoBehaviour
+{
+    public Rigidbody _rigidbody;
+    public Vector2 right = new Vector2(5, 0);
+    public Vector2 left = new Vector2(-5, 0);
+    public float speed = 0.1f;
+    public BulletspawnPoint bulletSpawnPoint;
+
+    public void Start()
+    {
+        _rigidbody = GetComponent<Rigidbody>();
+    }
+    private void Update()
+    {
+        Movement();
+        StopOngoingMovement();
+    }
+    public void Movement()
+    {
+        if (Input.GetKey(KeyCode.A)) 
+        {
+            _rigidbody.velocity = (left * speed);
+        }
+        else if (Input.GetKey(KeyCode.D)) 
+        {
+            _rigidbody.velocity = right * speed;
+        }
+    }
+    public void StopOngoingMovement()
+    {
+        if (Input.GetKeyUp(KeyCode.A))
+        {
+            _rigidbody.velocity = new Vector2(0, 0);
+        }
+        else if (Input.GetKeyUp(KeyCode.D))
+        {
+            _rigidbody.velocity = new Vector2(0, 0);
+        }
+    }
+}
