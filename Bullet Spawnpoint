@@ -1,0 +1,51 @@
+using UnityEngine;
+
+public class BulletspawnPoint : MonoBehaviour
+{
+    public Player player;
+    private Rigidbody2D _rb;
+    public GameObject bulletPrefab;
+    public GameObject clone;
+    public Transform bulletSpawnpoint;
+    public float shootTimer = 0;
+    public float decayTimer = 0;
+    public const float Shootdelay = 0.2f;
+    public const int decayDelay = 1;
+
+    public void Start()
+    {
+        _rb = GetComponent<Rigidbody2D>();
+
+    }
+    private void Update()
+    {
+        FindPlayerLocation();
+        Shoot();
+    }
+    public void FindPlayerLocation()
+    {
+        Vector2 playerPosition = new Vector2(player._rigidbody.position.x, player._rigidbody.position.y + 1);
+        _rb.position = playerPosition;
+        #region validation
+        if (playerPosition == null)
+        {
+            Debug.LogError("Player position is null");
+        }
+        #endregion
+
+    }
+    public void Shoot() 
+    {
+        shootTimer += Time.deltaTime;
+        if (shootTimer > Shootdelay)
+        {
+
+
+            if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.Space))
+            {
+          clone =  Instantiate(bulletPrefab, bulletSpawnpoint.position, bulletSpawnpoint.rotation);
+                shootTimer = 0;
+            }
+        }
+    }
+}
