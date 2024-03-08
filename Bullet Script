@@ -1,0 +1,21 @@
+using UnityEngine;
+
+public class BulletScript : MonoBehaviour
+{
+    #region variables
+    Vector2 up = new Vector2(0, 10);
+    public float speed = 1.0f;
+    public Rigidbody _rigidbody;
+    public float timer = 0;
+    public const int delay = 3;
+    #endregion variables
+    public void Start()
+    {
+        _rigidbody = GetComponent<Rigidbody>();
+    }
+    private void Update()
+    {
+        _rigidbody.velocity = new Vector2(0, 5) * speed;
+    }
+
+}
