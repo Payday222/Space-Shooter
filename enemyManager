@@ -1,0 +1,106 @@
+using UnityEngine;
+
+public class enemyManager : MonoBehaviour
+{
+    #region declarations
+    int enemiesPerRow;
+    int rowPick;
+    System.Random random = new System.Random();
+    public GameObject Enemy;
+    public Transform EnemySpawnpointTransform;
+    public Rigidbody enemySpawnpointRb;
+    #region enemyspawnpoint rbs
+    public Rigidbody enemySpawner1rb;
+    public Rigidbody enemySpawner2rb;
+    public Rigidbody enemySpawner3rb;
+    public Rigidbody enemySpawner4rb;
+    #endregion enemyspawnpoint rbs
+    #endregion declarations
+    private void Start()
+    {
+        enemySpawnpointRb = GetComponent<Rigidbody>();
+        enemySpawnpointRb.MovePosition(new Vector2(0, 0));
+        #region enemyspawner rbs
+        enemySpawner1rb = GetComponent<Rigidbody>();
+        enemySpawner2rb = GetComponent<Rigidbody>();
+        enemySpawner3rb = GetComponent<Rigidbody>();
+        enemySpawner4rb = GetComponent<Rigidbody>();
+        #endregion enemyspawner rbs
+        WhichRowsAreActive();
+    }
+    private void Update()
+    {
+
+    }
+    public void WhichRowsAreActive()
+    {
+        rowPick = random.Next(1, 5);
+        switch (rowPick)
+        {
+            case 1:
+                enemySpawner1rb.MovePosition(new Vector2(-8, 8));
+                enemySpawnpointRb = enemySpawner1rb;
+                EnemySpawnpointTransform = enemySpawner1rb.transform;
+                EnemySpawner();
+                break;
+            case 2:
+                enemySpawner1rb.MovePosition(new Vector2(-8, 8));
+                enemySpawnpointRb = enemySpawner1rb;
+                EnemySpawnpointTransform = enemySpawner1rb.transform;
+                EnemySpawner();
+                enemySpawner2rb.MovePosition(new Vector2(-8, 7)); //Y may need to be changed
+                enemySpawnpointRb = enemySpawner2rb;
+                EnemySpawnpointTransform = enemySpawner2rb.transform;
+                EnemySpawner();
+                break;
+            case 3:
+                enemySpawner1rb.MovePosition(new Vector2(-8, 8));
+                enemySpawnpointRb = enemySpawner1rb;
+                EnemySpawnpointTransform = enemySpawner1rb.transform;
+                EnemySpawner();
+                enemySpawner2rb.MovePosition(new Vector2(-8, 7));
+                enemySpawnpointRb = enemySpawner2rb;
+                EnemySpawnpointTransform = enemySpawner2rb.transform;
+                EnemySpawner();
+                enemySpawner3rb.MovePosition(new Vector2(-8, 6));
+                enemySpawnpointRb = enemySpawner3rb;
+                EnemySpawnpointTransform = enemySpawner3rb.transform;
+                EnemySpawner();
+                break;
+            case 4:
+                enemySpawner1rb.MovePosition(new Vector2(-8, 8));
+                enemySpawnpointRb = enemySpawner1rb;
+                EnemySpawnpointTransform = enemySpawner1rb.transform;
+                EnemySpawner();
+                enemySpawner2rb.MovePosition(new Vector2(-8, 7));
+                enemySpawnpointRb = enemySpawner2rb;
+                EnemySpawnpointTransform = enemySpawner2rb.transform;
+                EnemySpawner();
+                enemySpawner3rb.MovePosition(new Vector2(-8, 6));
+                enemySpawnpointRb = enemySpawner3rb;
+                EnemySpawnpointTransform = enemySpawner3rb.transform;
+                EnemySpawner();
+                enemySpawner4rb.MovePosition(new Vector2(-8, 5));
+                enemySpawnpointRb = enemySpawner4rb;
+                EnemySpawnpointTransform = enemySpawner4rb.transform;
+                EnemySpawner();
+                break;
+
+            default:
+                Debug.Log("rowPick is not working. What?!");
+                break;
+        }
+
+    }
+    #region enemy spawn
+    public void EnemySpawner()
+    {
+        for (int enemiesPerRow = random.Next(0, 1); enemiesPerRow >= 0; enemiesPerRow--)
+        {
+            GameObject clone = Instantiate(Enemy, EnemySpawnpointTransform.position, EnemySpawnpointTransform.rotation);
+            enemySpawnpointRb.MovePosition(new Vector2(enemySpawnpointRb.position.x + 1, enemySpawnpointRb.position.y));
+        }
+    }
+
+}
+    #endregion enemy spawn
